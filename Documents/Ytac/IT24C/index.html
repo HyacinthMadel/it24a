@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=>, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+
+     <!-- <style>h1{
+    color: rgb(0, 0, 0);
+}</style> -->
+
+</head>
+<body>
+    <h1 id="text"> Hello World</h1>
+    <input type="text" id="textbox" placeholder="Type your text here!" oninput="updateDisplay()">
+    <br>
+
+<h1 id="display"> Your Text goes here</h1>
+
+<!-- <button id="btn"> CLICK</button> -->
+
+ <!-- <script src="script.js"></script> -->
+<script>
+    function updateDisplay(){
+   var textbox = document.getElementById("textbox");
+   var displaytext = document.getElementById("display");
+
+    displaytext.textContent = textbox.value;
+    
+}
+
+</script>
+</script>
+</body>
+</html>
