@@ -43,16 +43,19 @@
     }
 
     function addTaskItem(taskText){
+        
         const li = document.createElement("li");
-        li.textContent = taskText;
         const taskSpan = document.createElement("span");
+        taskSpan.textContent = taskText;
+        //
+        li.appendChild(taskSpan);
 
         document.getElementById("taskList").appendChild(li);
         console.log("addTaskItem() called ->: ", taskText, Date());
 
         const deleteBtn = createDeleteButton(li);
         li.appendChild(deleteBtn);
-        
+
         const editBtn = createEditButton(li,taskSpan);
         li.appendChild(editBtn);
 
@@ -64,7 +67,7 @@
     function createDeleteButton(li){
         const deleteBtn = document.createElement("button");
 
-        deleteBtn.textContent="X";
+        deleteBtn.textContent="Delete";
         deleteBtn.className="delete-btn";
         deleteBtn.style.marginLeft = "8px";
         deleteBtn.onclick = () => handleDeleteClick(li);
@@ -106,20 +109,20 @@
     function createDoneButton(taskSpan){
         const doneBtn = document.createElement("button");
         doneBtn.textContent = "Done";
+        doneBtn.style.marginLeft = "8px";
         doneBtn.onclick = () =>{
             const li= taskSpan.parentElement;
-            console.log(li);
-
+            
             taskSpan.classList.add("done");
 
-            const buttons = li.querySelectorAll("buttons");
-            buttons.forEach(btn => bt.remove());
+            const buttons = li.querySelectorAll("button");
+            //
+            buttons.forEach(btn => btn.remove());
 
             console.log("Task completed", taskSpan.textContent, Date());
         }
         return doneBtn;
     }
-
 
 </script>
     
