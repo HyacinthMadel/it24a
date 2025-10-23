@@ -31,16 +31,16 @@
 <script>
 
 function initMap(maoDataUrl1){
-    const map = L.map('map').setView([8.3603,124.8684],17);
+    const map = L.map('map').setView([8.360053042057906, 124.86834154336864], 17);
 
-    const openStreetMap = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    const openStreetMap = L.tileLayer('https://tile.openstreetmap.org/{z}/{y}/{x}.png',{
         maxZoom:19,
         attribution:'&copy; OpenStreetMap contributors'
 
     });
 
     const satellite = L.tileLayer(
-        'https://server.argisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{x}/{y}',
+        'https://server.argisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
         {attribution: 'Tiles (c) Ersi - Source: Esri, Maxar, Earthstar Geographic, GIS User Community'}
     
     );
@@ -69,12 +69,30 @@ function initMap(maoDataUrl1){
                 markerGroup[type].addLayer(marker);
 
             });
+            //
             Object.values(markerGroups).forEach(group => group.addTo(map));
+
+            //layer control
+            const baseMap={
+                "OpenStreetMap": openStreetMap,
+                "Satellite": satellite
+
+            }
+
+            const overlayMaps ={};
+
+            //Add Marker Groups to the map according to layer filter
+            Object.keys(markerGroup).forEach(type => {
+                overlayMaps[type] = markerGroup[type];
+            });
+
+            L.control.layers(baseMaps, overlayMaps,{collapsed:false}).addTo(map);
          })
+         .catch(err => console.error('Error loading JSON', err));
  
 }
 document.addEventListener("DOMContentLoaded", () =>{
-    initMap('');
+    initMap('maos.json');
 ;});
 
 </script>

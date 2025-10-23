@@ -1,0 +1,18 @@
+[
+    {
+        "name":"ICS Laboratory 1",
+        "title":"ICS Lab 1",
+        "description":"Computer Lab",
+        "img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT69xulbmrCTSPZef-ABZ9LafYl913zPHwgCA&s",
+        "lat":8.3593, 
+        "lng":124.8691
+    },
+    {
+        "name":"Northern Bukidnon State College Grounds",
+        "title":"NBSC Grounds",
+        "description":"Kasagbutan",
+        "img":"https://media.giphy.com/media/9Jlgtvlree9cA/giphy.gif",
+        "lat":8.3606, 
+        "lng":124.8683
+    }
+]
