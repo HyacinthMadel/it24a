@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maps</title>
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+
+    <style>
+        #map { height: 400px; }
+        .popup-image {
+            max-width: 200px;
+            height: auto;
+        }
+
+    </style>
+    
+</head>
+<body>
+    <h1>Basic Map</h1>
+     <div id="map"></div>
+</body>
+<script>
+
+function initMap(maoDataUrl1){
+    const map = L.map('map').setView([8.3603,124.8684],17);
+
+    const openStreetMap = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
+        maxZoom:19,
+        attribution:'&copy; OpenStreetMap contributors'
+
+    });
+
+    const satellite = L.tileLayer(
+        'https://server.argisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{x}/{y}',
+        {attribution: 'Tiles (c) Ersi - Source: Esri, Maxar, Earthstar Geographic, GIS User Community'}
+    
+    );
+
+    openStreetMap.addTo(map);
+    console.log("Base map tile layer loaded" + Date());
+
+    const markerGroup = {};
+
+    fetch(mapDataUrl)
+       .then(response => response.json())
+         .then(data => {
+            data.forEach( pin => {
+                const type = pin.locationType || "Other";
+
+                if (!markerGroup[type]){
+                    markerGroup[type] = L.layerGroup();
+                }
+
+                //Marker and Popup
+                const marker = L.marker([pin.lat,pin.lng]).addTo(map);
+                const img = `<img src='${pin.img}' class="popup-image">`;
+                marker.bindPopup(`${img}<br><b> ${pin.title} </b><br> ${pin.description}<br><i>${pin.locationType}</i>`);
+                console.log('${pin.name} Loaded' +Date());
+
+                markerGroup[type].addLayer(marker);
+
+            });
+            Object.values(markerGroups).forEach(group => group.addTo(map));
+         })
+ 
+}
+document.addEventListener("DOMContentLoaded", () =>{
+    initMap('');
+;});
+
+</script>
+</html>
